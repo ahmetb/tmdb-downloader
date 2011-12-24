@@ -40,13 +40,14 @@ def main():
 
     if len(argv) > 4:
         dest_dir = argv[4]
-        if os.path.exists(dest_dir) == False:
-            try:
-                os.mkdir(dest_dir)
-                print 'Directory %s is created.' % dest_dir
-            except Exception as err:
-                print 'Error occurred: %s' % err
-                exit(2)
+
+    if os.path.exists(dest_dir) == False:
+        try:
+            os.mkdir(dest_dir)
+            print 'Directory %s is created.' % dest_dir
+        except Exception as err:
+            print 'Error occurred: %s' % err
+            exit(2)
     print 'Destination directory is \'%s\''% dest_dir
 
 
@@ -66,14 +67,13 @@ def download_movie_data(movie_id):
 
         file_name = url.split('/')[-1]
         local = open(os.path.join(dest_dir, file_name),'w+')
-        print 'out file %s' % local.name
 
         web = urlopen(url)
         local.write(webFile.read())
         web.close()
         local.close()
     except Exception as err:
-        print '%d: ERROR: %s' % (movie_id, err)
+        print '#%d: ERROR: %s' % (movie_id, err)
         
 
 def prepare_url(movie_id):
