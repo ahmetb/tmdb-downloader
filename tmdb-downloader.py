@@ -14,7 +14,7 @@ Downloads movie data with ids as filenames to the output folder. Fetches movies 
 
 api_key = None
 base_url = 'http://api.themoviedb.org/2.1/Movie.getInfo/en/json/%(api_key)s/%(movie_id)d'
-interval_sec=0.9
+interval_sec=1.1
 dest_dir = 'out'
 
 def main():
@@ -53,27 +53,28 @@ def main():
 
     print 'Starting download %d...%d' % (start, end)
     for movie_id in range(start,end+1):
-        download_save(movie_id)
+        result = download_save(movie_id)
+        if result:
+            print '#%d: OK' % movie_id
         sleep(interval_sec)
 
 
 def download_save(movie_id):
-    res = download_movie_data(movie_id);
-
-def download_movie_data(movie_id):
     try:
-
         url = prepare_url(movie_id)
 
         file_name = url.split('/')[-1]
         local = open(os.path.join(dest_dir, file_name),'w+')
 
         web = urlopen(url)
-        local.write(webFile.read())
+        local.write(web.read())
         web.close()
         local.close()
+
+        return True
     except Exception as err:
         print '#%d: ERROR: %s' % (movie_id, err)
+        return False
         
 
 def prepare_url(movie_id):
