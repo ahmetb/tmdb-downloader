@@ -17,7 +17,7 @@ new records will be created, old records will be updated.
 
 Credits
 =======
-Ahmet Alp Balkan <ahmetalpbalkan at gmail.com>
+Ahmet Alp Balkan (`ahmetalpbalkan at gmail.com`)
 
 Licence
 =======
