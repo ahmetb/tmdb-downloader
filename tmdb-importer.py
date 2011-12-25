@@ -16,13 +16,16 @@ except:
     http://api.mongodb.org/python/current/installation.html'''
     exit(1)
 
-usage = '''Usage: %s SRCDIR MONGO_DB MONGO_COLLECTION [MONGO_HOST [MONGO_PORT [MONGO_USER [MONGO_PASSWORD]]]]
+usage = '''Usage:   %s SRCDIR MONGO_DB MONGO_COLLECTION [MONGO_HOST [MONGO_PORT
+            [MONGO_USER [MONGO_PASSWORD]]]]
 
 (Dependencies: pymongo)
 
-SRCDIR should have files containing JSON data for TMDb movies. Each file should contain only movie or error message.
+SRCDIR should have files containing JSON data for TMDb movies. Each file 
+should contain only movie or error message.
 
-Input files will be processed (often reduced) and then saved to the mongodb, however that can be customized.'''
+Input files will be processed (often reduced) and then saved to the mongodb,
+however that can be customized.'''
 
 MOVIE_ITEM_TYPE = 1
 
@@ -170,7 +173,7 @@ def prepare_from_json(json_str, filename):
 
 def save_movie(movie):
     global connection, db, collection
-    global mongo_db, mongo_collection
+    global mongo_db, mongo_collection, mongo_user, mongo_pass
     '''Itemizes given movie and persists.'''
 
     item = {
@@ -184,6 +187,8 @@ def save_movie(movie):
             try:
                 connection = Connection(mongo_host, mongo_port)
                 db = connection[mongo_db]
+                if mongo_user or mongo_pass:
+                    db.authenticate(mongo_user, mongo_pass)
                 collection = db[mongo_collection]
 
             except Exception as err:
