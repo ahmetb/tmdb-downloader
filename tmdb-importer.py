@@ -2,15 +2,15 @@
 
 # Author: Ahmet Alp Balkan <ahmetalpbalkan at gmail.com>
 # http://ollaa.com
+
 import os
-from sys import argv
-from sys import exit
+from sys import argv, exit
 import json
 import datetime
 
 try:
     from pymongo import Connection
-except:
+except ImportError:
     print '''pymongo is not installed on your system: 
     execute command "easy_install pymongo" or refer to 
     http://api.mongodb.org/python/current/installation.html'''
