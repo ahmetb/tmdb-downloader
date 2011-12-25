@@ -146,7 +146,8 @@ def prepare_from_json(json_str, filename):
             if 'cast' in obj and obj['cast'] != []:
                 names = []
                 for cast in obj['cast'][:3]:
-                    names.append(cast['name'])
+                    if not cast['name'] in names: # avoid duplicate cast
+                        names.append(cast['name'])
                 movie['cast'] = names
 
             if 'posters' in obj and obj['posters'] != []:
@@ -169,7 +170,7 @@ def prepare_from_json(json_str, filename):
 
     except ValueError as err:
         print 'Parse error: %s' % err
-        exit(1)
+        return
 
 def save_movie(movie):
     global connection, db, collection
