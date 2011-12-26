@@ -145,9 +145,11 @@ def prepare_from_json(json_str, filename):
 
             if 'cast' in obj and obj['cast'] != []:
                 names = []
-                for cast in obj['cast'][:3]:
-                    if not cast['name'] in names: # avoid duplicate cast
+                for cast in obj['cast']:
+                    if (not cast['name'] in names) and cast['job'] in ['Actor', 'Director']:
+                        # avoid duplicate cast
                         names.append(cast['name'])
+                names = names[:3]
                 movie['cast'] = names
 
             if 'posters' in obj and obj['posters'] != []:
